@@ -43,26 +43,29 @@
 <body>
 
 <header>
-  <h1>NAAR</h1>
+  <div style="display:flex;align-items:center;gap:15px;">
+    <img src="logo.png" alt="NAAR logo" style="height:55px;" />
+    <h1>NAAR</h1>
+  </div>
   <nav>
     <a href="#">Home</a>
     <a href="#shop">Shop</a>
-    <a href="#lookbook">LATEST</a>
+    <a href="#lookbook">Lookbook</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<div class="hero"><h2>NAAR • MINIMAL • </h2></div>
+<div class="hero"><h2>MODERN • MINIMAL • BOLD</h2></div>
 
 <section id="shop">
   <h2>Shop</h2>
   <div class="products">
 
     <div class="product">
-      <img src="https://imgur.com/a/fQpDlqg">
+      <img src="https://images.unsplash.com/photo-1520975661595-6453be3f7070">
       <div>
         <h3>SUMYA</h3>
-        <p>TK 500 </p>
+        <p>TAKA 550</p>
         <div class="size-row">
           <select id="size-tee">
             <option value="">Select Size</option>
@@ -82,7 +85,7 @@
       <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
       <div>
         <h3>NAIMA</h3>
-        <p>TAKA 600</p>
+        <p>TAKA 650</p>
         <div class="size-row">
           <select id="size-hoodie">
             <option value="">Select Size</option>
@@ -101,8 +104,8 @@
   </div>
 </section>
 
-<section id="LATEST">
-  <h2>LATEST</h2>
+<section id="lookbook">
+  <h2>Instagram Lookbook</h2>
   <div class="insta-grid">
     <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f">
     <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d">
@@ -113,8 +116,8 @@
 
 <section id="contact">
   <h2>Contact</h2>
-  <p>Email: naar.bd@gmail.com</p>
-  <p>Instagram: @NAARbrand</p>
+  <p>Email: hello@noirebrand.com</p>
+  <p>Instagram: @noirebrand</p>
 </section>
 
 <footer><p>© 2025 NAAR</p></footer>
@@ -122,24 +125,35 @@
 <div id="cart" onclick="toggleCart()">🛒 Cart</div>
 <div id="cartItems"><h3>Your Cart</h3><ul id="items"></ul></div>
 
-<a class="whatsapp" href="https://wa.me/8801819638383" target="_blank">WhatsApp Order</a>
+<a class="whatsapp" href="#" onclick="sendWhatsApp()">WhatsApp Order</a>
 
 <script>
   let cart = [];
+
   function addToCart(item, size){
     if(!size){ alert('Please select a size'); return; }
     cart.push(item + ' - ' + size);
     renderCart();
     alert(item + ' (' + size + ') added');
   }
+
   function toggleCart(){
     const c = document.getElementById('cartItems');
     c.style.display = c.style.display === 'block' ? 'none' : 'block';
   }
+
   function renderCart(){
     let list = document.getElementById('items');
     list.innerHTML='';
     cart.forEach(i=>{ let li=document.createElement('li'); li.textContent=i; list.appendChild(li); });
+  }
+
+  function sendWhatsApp(){
+    if(cart.length === 0){ alert('Your cart is empty'); return; }
+    let message = 'Hello NAAR, I want to order:%0A';
+    cart.forEach((item, index)=>{ message += (index+1) + '. ' + item + '%0A'; });
+    let phone = '8801819638383';
+    window.open('https://wa.me/' + phone + '?text=' + message, '_blank');
   }
 </script>
 
