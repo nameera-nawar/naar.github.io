@@ -6,9 +6,7 @@
 <title>NAAR | Womenwear</title>
 
 <style>
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -23,28 +21,26 @@ header {
   color: #fff;
   padding: 18px 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-header img {
-  height: 50px;
+nav {
+  display: flex;
+  gap: 25px;
 }
 
 nav a {
   color: white;
-  margin-left: 25px;
   text-decoration: none;
   font-size: 0.9rem;
   transition: opacity 0.3s ease;
 }
 
-nav a:hover {
-  opacity: 0.7;
-}
+nav a:hover { opacity: 0.7; }
 
 /* HERO */
 .hero {
@@ -58,12 +54,24 @@ nav a:hover {
 .hero-logo {
   width: 70%;
   max-width: 420px;
-  height: auto;
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-/* MOBILE FIX */
+/* MOBILE HEADER FIX */
 @media (max-width: 768px) {
+  header {
+    padding: 14px 10px;
+  }
+
+  nav {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  nav a {
+    font-size: 0.85rem;
+  }
+
   .hero {
     height: 80vh;
     padding: 20px;
@@ -102,9 +110,7 @@ section h2 {
   transition: transform 0.3s ease;
 }
 
-.product:hover {
-  transform: translateY(-6px);
-}
+.product:hover { transform: translateY(-6px); }
 
 .product img {
   width: 100%;
@@ -112,9 +118,7 @@ section h2 {
   object-fit: cover;
 }
 
-.product-content {
-  padding: 18px;
-}
+.product-content { padding: 18px; }
 
 .product select {
   width: 100%;
@@ -136,11 +140,6 @@ section h2 {
   width: 100%;
   cursor: pointer;
   margin-top: 12px;
-  transition: background 0.3s ease;
-}
-
-.product button:hover {
-  background: #333;
 }
 
 /* CART */
@@ -209,7 +208,7 @@ footer {
   background: black;
   color: white;
   text-align: center;
-  padding: 35px;
+  padding: 35px 20px 90px;
   margin-top: 60px;
 }
 
@@ -224,6 +223,7 @@ footer {
   border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
+  z-index: 999;
 }
 </style>
 </head>
@@ -231,7 +231,7 @@ footer {
 <body>
 
 <header>
-  <nav style="margin-left:auto;">
+  <nav>
     <a href="#">Home</a>
     <a href="#shop">Shop</a>
     <a href="#lookbook">Lookbook</a>
@@ -239,12 +239,10 @@ footer {
   </nav>
 </header>
 
-<!-- HERO -->
 <div class="hero">
   <img src="hero.png" class="hero-logo" id="heroLogo" alt="NAAR">
 </div>
 
-<!-- SHOP -->
 <section id="shop">
 <h2>Shop Womenwear</h2>
 
@@ -307,7 +305,6 @@ footer {
 </div>
 </section>
 
-<!-- LOOKBOOK -->
 <section id="lookbook">
 <h2>Lookbook</h2>
 <div class="insta-grid">
@@ -325,59 +322,32 @@ footer {
 <p>Facebook: NAAR BD</p>
 </section>
 
-<footer> © 2025 NAAR </footer>
+<footer>© 2025 NAAR</footer>
 
 <div id="cart" onclick="toggleCart()">🛒 Cart</div>
 <div id="cartItems"><h3>Your Cart</h3><ul id="items"></ul></div>
-
 <a class="whatsapp" onclick="sendWhatsApp()">WhatsApp Order</a>
 
 <script>
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-// Fade logo on scroll
 window.addEventListener("scroll", () => {
   const logo = document.getElementById("heroLogo");
-  let scrollY = window.scrollY;
-  let opacity = Math.max(1 - scrollY / 300, 0);
-  logo.style.opacity = opacity;
-  logo.style.transform = `translateY(${scrollY * 0.2}px)`;
+  let y = window.scrollY;
+  logo.style.opacity = Math.max(1 - y / 300, 0);
+  logo.style.transform = `translateY(${y * 0.2}px)`;
 });
 
-// Add to Cart with flying animation
 document.querySelectorAll('.product').forEach(product => {
-  const btn = product.querySelector('button');
-  btn.addEventListener('click', () => {
+  product.querySelector('button').addEventListener('click', () => {
     const name = product.querySelector('h3').textContent;
-    const priceText = product.querySelector('p').textContent.replace('TAKA ','');
-    const price = parseFloat(priceText);
-    const sizeSelect = product.querySelector('.size-select');
-    const size = sizeSelect.value;
-    if (!size) { alert('Please select a size'); return; }
+    const price = product.querySelector('p').textContent.replace('TAKA ','');
+    const size = product.querySelector('.size-select').value;
+    if (!size) return alert('Please select a size');
 
-    const item = { name, size, price };
-    cart.push(item);
+    cart.push({ name, size, price });
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
-
-    // Flying image animation
-    const img = product.querySelector('img');
-    const flyingImg = img.cloneNode(true);
-    flyingImg.classList.add('flying-img');
-    document.body.appendChild(flyingImg);
-
-    const imgRect = img.getBoundingClientRect();
-    const cartRect = document.getElementById('cart').getBoundingClientRect();
-
-    flyingImg.style.left = imgRect.left + 'px';
-    flyingImg.style.top = imgRect.top + 'px';
-
-    requestAnimationFrame(() => {
-      flyingImg.style.transform = `translate(${cartRect.left - imgRect.left}px, ${cartRect.top - imgRect.top}px) scale(0.1)`;
-      flyingImg.style.opacity = '0.5';
-    });
-
-    setTimeout(() => { flyingImg.remove(); }, 800);
   });
 });
 
@@ -395,13 +365,12 @@ function renderCart() {
   });
 }
 
-// Load cart on page load
 renderCart();
 
 function sendWhatsApp() {
-  if (cart.length === 0) { alert("Cart is empty"); return; }
+  if (!cart.length) return alert("Cart is empty");
   let msg = "Hello NAAR, I want to order:%0A";
-  cart.forEach((i, n) => msg += (n+1) + ". " + i.name + " - " + i.size + " - TAKA " + i.price + "%0A");
+  cart.forEach((i,n)=>msg+=`${n+1}. ${i.name} - ${i.size} - TAKA ${i.price}%0A`);
   window.open("https://wa.me/8801819638383?text=" + msg, "_blank");
 }
 </script>
