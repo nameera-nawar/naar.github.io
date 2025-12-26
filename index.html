@@ -46,20 +46,26 @@ nav a:hover {
   opacity: 0.7;
 }
 
-/* HERO */
+/* HERO – LOGO ONLY, NO BOX */
 .hero {
-  height: 90vh;
   background-color: #f6f1e9;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
 }
 
+/* LOGO IMAGE */
 .hero-logo {
-  width: 70%;
-  max-width: 420px;
+  width: 100%;
+  max-width: 360px;
   height: auto;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  display: block;
+}
+@media (min-width: 1024px) {
+  .hero {
+    padding: 100px 20px;
+  }
 }
 
 /* MOBILE FIX */
