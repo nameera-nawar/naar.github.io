@@ -31,7 +31,7 @@ header {
 }
 
 header img {
-  height: 55px;
+  height: 50px;
 }
 
 nav a {
@@ -49,20 +49,16 @@ nav a:hover {
 /* HERO */
 .hero {
   height: 90vh;
-  background: url('hero.png') center/contain no-repeat;
   background-color: #f6f1e9;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-
-.hero h2 {
-  font-size: 3rem;
-  background: rgba(0,0,0,0.55);
-  padding: 22px 30px;
-  color: white;
-  letter-spacing: 3px;
+.hero-logo {
+  width: 80%;
+  max-width: 420px;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 /* SECTIONS */
@@ -106,7 +102,7 @@ section h2 {
   padding: 18px;
 }
 
-.size-row select {
+.product select {
   width: 100%;
   padding: 9px;
   margin-top: 8px;
@@ -156,19 +152,19 @@ section h2 {
   padding: 20px;
   border-radius: 14px;
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-  transform: translateY(20px);
   opacity: 0;
   pointer-events: none;
+  transform: translateY(20px);
   transition: all 0.35s ease;
 }
 
 #cartItems.active {
-  transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
+  transform: translateY(0);
 }
 
-/* INSTAGRAM */
+/* LOOKBOOK */
 .insta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -209,7 +205,7 @@ footer {
 <body>
 
 <header>
-  <img src="naar-logo.png" alt="NAAR Logo">
+  <img src="hero.png" alt="NAAR Logo">
   <nav>
     <a href="#">Home</a>
     <a href="#shop">Shop</a>
@@ -218,10 +214,12 @@ footer {
   </nav>
 </header>
 
+<!-- HERO -->
 <div class="hero">
-  <h2>DESIGNED TO TURN HEADS</h2>
+  <img src="hero.png" class="hero-logo" id="heroLogo" alt="NAAR">
 </div>
 
+<!-- SHOP -->
 <section id="shop">
 <h2>Shop Womenwear</h2>
 
@@ -272,8 +270,9 @@ footer {
 </div>
 </section>
 
+<!-- LOOKBOOK -->
 <section id="lookbook">
-<h2>Instagram Lookbook</h2>
+<h2>Lookbook</h2>
 <div class="insta-grid">
 <img src="https://images.unsplash.com/photo-1618354691438-25bc04584c23">
 <img src="https://images.unsplash.com/photo-1618354691605-c8e56b798a0d">
@@ -298,6 +297,15 @@ footer {
 <script>
 let cart = [];
 
+// Fade logo on scroll
+window.addEventListener("scroll", () => {
+  const logo = document.getElementById("heroLogo");
+  let scrollY = window.scrollY;
+  let opacity = Math.max(1 - scrollY / 300, 0);
+  logo.style.opacity = opacity;
+  logo.style.transform = `translateY(${scrollY * 0.2}px)`;
+});
+
 function addToCart(item, size) {
   if (!size) { alert("Please select a size"); return; }
   cart.push(item + " - " + size);
@@ -321,8 +329,8 @@ function renderCart() {
 function sendWhatsApp() {
   if (cart.length === 0) { alert("Cart is empty"); return; }
   let msg = "Hello NAAR, I want to order:%0A";
-  cart.forEach((i, n) => msg += (n+1)+". "+i+"%0A");
-  window.open("https://wa.me/8801819638383?text="+msg, "_blank");
+  cart.forEach((i, n) => msg += (n+1) + ". " + i + "%0A");
+  window.open("https://wa.me/8801819638383?text=" + msg, "_blank");
 }
 </script>
 
