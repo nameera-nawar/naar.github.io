@@ -11,7 +11,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #fafafa;
+  background: #f6f1e9;
   color: #111;
 }
 
@@ -37,15 +37,18 @@ nav a {
   color: white;
   text-decoration: none;
   font-size: 0.9rem;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-nav a:hover { opacity: 0.7; }
+nav a:hover {
+  opacity: 0.7;
+  transform: translateY(-1px);
+}
 
 /* HERO */
 .hero {
   height: 90vh;
-  background-color: #f6f1e9;
+  background: #f6f1e9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,18 +62,14 @@ nav a:hover { opacity: 0.7; }
 
 /* MOBILE HEADER FIX */
 @media (max-width: 768px) {
-  header {
-    padding: 14px 10px;
-  }
+  header { padding: 14px 10px; }
 
   nav {
     width: 100%;
     justify-content: space-around;
   }
 
-  nav a {
-    font-size: 0.85rem;
-  }
+  nav a { font-size: 0.85rem; }
 
   .hero {
     height: 80vh;
@@ -103,14 +102,17 @@ section h2 {
 }
 
 .product {
-  background: white;
+  background: #fff;
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 15px 25px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 
-.product:hover { transform: translateY(-6px); }
+.product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px rgba(0,0,0,0.12);
+}
 
 .product img {
   width: 100%;
@@ -140,9 +142,19 @@ section h2 {
   width: 100%;
   cursor: pointer;
   margin-top: 12px;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
 
-/* CART */
+.product button:hover {
+  background: #222;
+  transform: translateY(-1px);
+}
+
+.product button:active {
+  transform: scale(0.97);
+}
+
+/* CART BUTTON */
 #cart {
   position: fixed;
   right: 20px;
@@ -153,12 +165,18 @@ section h2 {
   border-radius: 30px;
   cursor: pointer;
   z-index: 999;
+  transition: transform 0.3s ease;
 }
 
+#cart:hover {
+  transform: translateY(-2px);
+}
+
+/* CART PANEL */
 #cartItems {
   position: fixed;
   right: 20px;
-  bottom: 80px;
+  bottom: 90px;
   background: white;
   color: black;
   width: 320px;
@@ -167,14 +185,14 @@ section h2 {
   box-shadow: 0 15px 30px rgba(0,0,0,0.2);
   opacity: 0;
   pointer-events: none;
-  transform: translateY(20px);
-  transition: all 0.35s ease;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 #cartItems.active {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* FLYING IMAGE */
@@ -224,6 +242,11 @@ footer {
   text-decoration: none;
   font-weight: bold;
   z-index: 999;
+  transition: transform 0.3s ease;
+}
+
+.whatsapp:hover {
+  transform: translateY(-2px);
 }
 </style>
 </head>
@@ -255,11 +278,7 @@ footer {
 <p>TAKA 550</p>
 <select class="size-select">
 <option value="">Select Size</option>
-<option value="S">S – 38</option>
-<option value="M">M – 40</option>
-<option value="L">L – 42</option>
-<option value="XL">XL – 44</option>
-<option value="XXL">XXL – 46</option>
+<option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
 </select>
 <div class="size-note">Chest size in inches</div>
 <button>Add to Cart</button>
@@ -273,11 +292,7 @@ footer {
 <p>TAKA 650</p>
 <select class="size-select">
 <option value="">Select Size</option>
-<option value="S">S – 38</option>
-<option value="M">M – 40</option>
-<option value="L">L – 42</option>
-<option value="XL">XL – 44</option>
-<option value="XXL">XXL – 46</option>
+<option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
 </select>
 <div class="size-note">Chest size in inches</div>
 <button>Add to Cart</button>
@@ -291,11 +306,7 @@ footer {
 <p>TAKA 650</p>
 <select class="size-select">
 <option value="">Select Size</option>
-<option value="S">S – 38</option>
-<option value="M">M – 40</option>
-<option value="L">L – 42</option>
-<option value="XL">XL – 44</option>
-<option value="XXL">XXL – 46</option>
+<option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
 </select>
 <div class="size-note">Chest size in inches</div>
 <button>Add to Cart</button>
@@ -364,7 +375,6 @@ function renderCart() {
     list.appendChild(li);
   });
 }
-
 renderCart();
 
 function sendWhatsApp() {
