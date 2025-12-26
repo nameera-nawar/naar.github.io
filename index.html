@@ -375,54 +375,76 @@ window.addEventListener("scroll", () => {
 });
 
 // Add to Cart with flying animation
+let cart = [];
+
 document.querySelectorAll('.product').forEach(product => {
-  const btn = product.querySelector('button');
-  btn.addEventListener('click', () => {
-    const name = product.querySelector('h3').textContent;
-    const priceText = product.querySelector('p').textContent.replace('TAKA ','');
-    const price = parseFloat(priceText);
-    const sizeSelect = product.querySelector('.size-select');
-    const size = sizeSelect.value;
-    if (!size) { alert('Please select a size'); return; }
+  product.querySelector('button').onclick = () => {
+    const size = product.querySelector('select').value;
+    if (!size) return alert('Please select a size');
 
-    const item = { name, size, price };
-    cart.push(item);
-    localStorage.setItem('cart', JSON.stringify(cart));
+    const name = product.querySelector('h3').innerText;
+    const price = parseInt(product.querySelector('p').innerText.replace('TAKA ',''));
+    const img = product.querySelector('img').src;
+
+    cart.push({name, price, size, img});
+    animateAdd(product.querySelector('img'));
     renderCart();
-
-    // Flying image animation
-    const img = product.querySelector('img');
-    const flyingImg = img.cloneNode(true);
-    flyingImg.classList.add('flying-img');
-    document.body.appendChild(flyingImg);
-
-    const imgRect = img.getBoundingClientRect();
-    const cartRect = document.getElementById('cart').getBoundingClientRect();
-
-    flyingImg.style.left = imgRect.left + 'px';
-    flyingImg.style.top = imgRect.top + 'px';
-
-    requestAnimationFrame(() => {
-      flyingImg.style.transform = `translate(${cartRect.left - imgRect.left}px, ${cartRect.top - imgRect.top}px) scale(0.1)`;
-      flyingImg.style.opacity = '0.5';
-    });
-
-    setTimeout(() => { flyingImg.remove(); }, 800);
-  });
+  };
 });
 
+function animateAdd(img) {
+  const fly = document.createElement('img');
+  fly.src = img.src;
+  fly.className = 'flying-img';
+  document.body.appendChild(fly);
+
+  const rect = img.getBoundingClientRect();
+  const cartRect = document.getElementById('cart').getBoundingClientRect();
+
+  fly.style.left = rect.left + 'px';
+  fly.style.top = rect.top + 'px';
+
+  setTimeout(() => {
+    fly.style.transform = `translate(${cartRect.left - rect.left}px, ${cartRect.top - rect.top}px) scale(0.2)`;
+    fly.style.opacity = 0;
+  }, 10);
+
+  setTimeout(() => fly.remove(), 800);
+}
+
 function toggleCart() {
-  document.getElementById("cartItems").classList.toggle("active");
+  document.getElementById('cartItems').classList.toggle('active');
 }
 
 function renderCart() {
-  const list = document.getElementById("items");
-  list.innerHTML = "";
+  const items = document.getElementById('items');
+  items.innerHTML = '';
+  let total = 0;
+
   cart.forEach(i => {
-    const li = document.createElement("li");
-    li.textContent = `${i.name} - ${i.size} - TAKA ${i.price}`;
-    list.appendChild(li);
+    total += i.price;
+    items.innerHTML += `
+      <div class="cart-item">
+        <img src="${i.img}">
+        <div>
+          <strong>${i.name}</strong><br>
+          Size: ${i.size}<br>
+          TAKA ${i.price}
+        </div>
+      </div>`;
   });
+
+  document.getElementById('totalItems').innerText = `Items: ${cart.length}`;
+  document.getElementById('totalPrice').innerText = `Total: TAKA ${total}`;
+}
+
+function checkout() {
+  if(cart.length === 0){ alert("Cart is empty"); return; }
+  let msg = 'Hello NAAR, I want to order:%0A';
+  cart.forEach((i,n)=> {
+    msg += `${n+1}. ${i.name} (${i.size}) - TAKA ${i.price}%0A`;
+  });
+  window.open('https://wa.me/8801819638383?text=' + msg);
 }
 
 // Load cart on page load
