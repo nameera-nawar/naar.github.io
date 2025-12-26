@@ -75,7 +75,6 @@ nav a:hover {
   }
 }
 
-
 /* SECTIONS */
 section {
   padding: 70px 40px;
@@ -179,6 +178,18 @@ section h2 {
   transform: translateY(0);
 }
 
+/* FLYING IMAGE */
+.flying-img {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 1000;
+  transition: transform 0.8s ease, opacity 0.8s ease;
+}
+
 /* LOOKBOOK */
 .insta-grid {
   display: grid;
@@ -244,12 +255,16 @@ footer {
 <div class="product-content">
 <h3>SUMYA KURTI</h3>
 <p>TAKA 550</p>
-<select onchange="this.dataset.size=this.value">
+<select class="size-select">
 <option value="">Select Size</option>
-<option>S – 38</option><option>M – 40</option><option>L – 42</option><option>XL – 44</option><option>XXL – 46</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
 </select>
 <div class="size-note">Chest size in inches</div>
-<button onclick="addToCart('SUMYA KURTI', this.previousElementSibling.dataset.size)">Add to Cart</button>
+<button>Add to Cart</button>
 </div>
 </div>
 
@@ -258,12 +273,16 @@ footer {
 <div class="product-content">
 <h3>NAIMA SET</h3>
 <p>TAKA 650</p>
-<select onchange="this.dataset.size=this.value">
+<select class="size-select">
 <option value="">Select Size</option>
-<option>S – 38</option><option>M – 40</option><option>L – 42</option><option>XL – 44</option><option>XXL – 46</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
 </select>
 <div class="size-note">Chest size in inches</div>
-<button onclick="addToCart('NAIMA SET', this.previousElementSibling.dataset.size)">Add to Cart</button>
+<button>Add to Cart</button>
 </div>
 </div>
 
@@ -272,12 +291,16 @@ footer {
 <div class="product-content">
 <h3>FATIHA CO-ORD</h3>
 <p>TAKA 650</p>
-<select onchange="this.dataset.size=this.value">
+<select class="size-select">
 <option value="">Select Size</option>
-<option>S – 38</option><option>M – 40</option><option>L – 42</option><option>XL – 44</option><option>XXL – 46</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
 </select>
 <div class="size-note">Chest size in inches</div>
-<button onclick="addToCart('FATIHA CO-ORD', this.previousElementSibling.dataset.size)">Add to Cart</button>
+<button>Add to Cart</button>
 </div>
 </div>
 
@@ -309,7 +332,7 @@ footer {
 <a class="whatsapp" onclick="sendWhatsApp()">WhatsApp Order</a>
 
 <script>
-let cart = [];
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Fade logo on scroll
 window.addEventListener("scroll", () => {
@@ -320,11 +343,42 @@ window.addEventListener("scroll", () => {
   logo.style.transform = `translateY(${scrollY * 0.2}px)`;
 });
 
-function addToCart(item, size) {
-  if (!size) { alert("Please select a size"); return; }
-  cart.push(item + " - " + size);
-  renderCart();
-}
+// Add to Cart with flying animation
+document.querySelectorAll('.product').forEach(product => {
+  const btn = product.querySelector('button');
+  btn.addEventListener('click', () => {
+    const name = product.querySelector('h3').textContent;
+    const priceText = product.querySelector('p').textContent.replace('TAKA ','');
+    const price = parseFloat(priceText);
+    const sizeSelect = product.querySelector('.size-select');
+    const size = sizeSelect.value;
+    if (!size) { alert('Please select a size'); return; }
+
+    const item = { name, size, price };
+    cart.push(item);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    renderCart();
+
+    // Flying image animation
+    const img = product.querySelector('img');
+    const flyingImg = img.cloneNode(true);
+    flyingImg.classList.add('flying-img');
+    document.body.appendChild(flyingImg);
+
+    const imgRect = img.getBoundingClientRect();
+    const cartRect = document.getElementById('cart').getBoundingClientRect();
+
+    flyingImg.style.left = imgRect.left + 'px';
+    flyingImg.style.top = imgRect.top + 'px';
+
+    requestAnimationFrame(() => {
+      flyingImg.style.transform = `translate(${cartRect.left - imgRect.left}px, ${cartRect.top - imgRect.top}px) scale(0.1)`;
+      flyingImg.style.opacity = '0.5';
+    });
+
+    setTimeout(() => { flyingImg.remove(); }, 800);
+  });
+});
 
 function toggleCart() {
   document.getElementById("cartItems").classList.toggle("active");
@@ -335,15 +389,18 @@ function renderCart() {
   list.innerHTML = "";
   cart.forEach(i => {
     const li = document.createElement("li");
-    li.textContent = i;
+    li.textContent = `${i.name} - ${i.size} - TAKA ${i.price}`;
     list.appendChild(li);
   });
 }
 
+// Load cart on page load
+renderCart();
+
 function sendWhatsApp() {
   if (cart.length === 0) { alert("Cart is empty"); return; }
   let msg = "Hello NAAR, I want to order:%0A";
-  cart.forEach((i, n) => msg += (n+1) + ". " + i + "%0A");
+  cart.forEach((i, n) => msg += (n+1) + ". " + i.name + " - " + i.size + " - TAKA " + i.price + "%0A");
   window.open("https://wa.me/8801819638383?text=" + msg, "_blank");
 }
 </script>
