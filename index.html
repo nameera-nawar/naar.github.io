@@ -88,7 +88,7 @@ footer { background: black; color: white; text-align: center; padding: 35px; mar
 <div class="products">
 
   <!-- SUMYA -->
-  <div class="product" onclick="window.location.href='product.html?name=sumya'">
+  <div class="product" onclick="goToProduct('sumya', this)">
     <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1">
     <div class="product-content">
       <h3>SUMYA KURTI</h3>
@@ -107,7 +107,7 @@ footer { background: black; color: white; text-align: center; padding: 35px; mar
   </div>
 
   <!-- NAIMA -->
-  <div class="product" onclick="window.location.href='product.html?name=naima'">
+  <div class="product" onclick="goToProduct('naima', this)">
     <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633">
     <div class="product-content">
       <h3>NAIMA SET</h3>
@@ -126,7 +126,7 @@ footer { background: black; color: white; text-align: center; padding: 35px; mar
   </div>
 
   <!-- FATIHA -->
-  <div class="product" onclick="window.location.href='product.html?name=fatiha'">
+  <div class="product" onclick="goToProduct('fatiha', this)">
     <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990">
     <div class="product-content">
       <h3>FATIHA CO-ORD</h3>
@@ -145,7 +145,7 @@ footer { background: black; color: white; text-align: center; padding: 35px; mar
   </div>
 
   <!-- ALIZA -->
-  <div class="product" onclick="window.location.href='product.html?name=aliza'">
+  <div class="product" onclick="goToProduct('aliza', this)">
     <img src="https://images.unsplash.com/photo-1618354691438-25bc04584c23">
     <div class="product-content">
       <h3>ALIZA KURTI</h3>
@@ -164,7 +164,7 @@ footer { background: black; color: white; text-align: center; padding: 35px; mar
   </div>
 
   <!-- ZARA -->
-  <div class="product" onclick="window.location.href='product.html?name=zara'">
+  <div class="product" onclick="goToProduct('zara', this)">
     <img src="https://images.unsplash.com/photo-1618354691605-c8e56b798a0d">
     <div class="product-content">
       <h3>ZARA SET</h3>
@@ -227,11 +227,19 @@ window.addEventListener("scroll", () => {
   logo.style.transform = `translateY(${scrollY * 0.2}px)`;
 });
 
+// Function to go to product page
+function goToProduct(name, element){
+  const sizeSelect = element.querySelector('.size-select');
+  const sizeParam = sizeSelect.value ? `&size=${sizeSelect.value}` : '';
+  window.location.href = `product.html?name=${name}${sizeParam}`;
+}
+
 document.querySelectorAll('.product').forEach(product => {
   const btn = product.querySelector('button');
   btn.addEventListener('click', () => {
     const name = product.querySelector('h3').textContent;
     const priceText = product.querySelector('p').textContent.replace('TAKA ','');
+
     const price = parseFloat(priceText);
     const sizeSelect = product.querySelector('.size-select');
     const size = sizeSelect.value;
