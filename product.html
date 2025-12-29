@@ -1,196 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NAAR | Product</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f0e1; /* beige */
-      color: #111;
-    }
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    .product-logo {
-      max-width: 200px;
-      height: auto;
-    }
-    .product-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px 20px;
-    }
-    .product-image {
-      max-width: 400px;
-      width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      transition: transform 0.3s ease;
-    }
-    .product-image:hover {
-      transform: scale(1.05);
-    }
-    .product-name {
-      font-size: 2em;
-      margin: 10px 0;
-      text-align: center;
-    }
-    .product-price {
-      font-size: 1.5em;
-      color: #b12704;
-      margin: 10px 0;
-    }
-    .product-description {
-      font-size: 1.1em;
-      max-width: 600px;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .size-selector {
-      margin-bottom: 20px;
-    }
-    select {
-      padding: 10px;
-      font-size: 1em;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .buttons {
-      display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .buttons a, .buttons button {
-      padding: 12px 25px;
-      font-size: 1em;
-      text-decoration: none;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .add-cart {
-      background: #111;
-      color: #fff;
-    }
-    .add-cart:hover {
-      background: #333;
-    }
-    .whatsapp-order {
-      background: #25D366;
-      color: #fff;
-    }
-    .whatsapp-order:hover {
-      background: #1ebe57;
-    }
-    @media(max-width:768px) {
-      .product-name { font-size: 1.5em; }
-      .product-price { font-size: 1.2em; }
-      .product-description { font-size: 1em; padding: 0 10px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NAAR | Product</title>
+<style>
+html { scroll-behavior: smooth; }
+body { margin:0; font-family: 'Segoe UI', sans-serif; background:#F6F1E7; color:#111; }
+header { background:#000; padding:18px 40px; display:flex; justify-content:center; align-items:center; position:sticky; top:0; z-index:1000; }
+header img { height:50px; }
+.product-container { max-width:1100px; margin:50px auto; display:flex; gap:50px; flex-wrap:wrap; align-items:flex-start; }
+.product-image { flex:1; min-width:300px; }
+.product-image img { width:100%; border-radius:14px; object-fit:cover; transition: transform 0.3s ease; }
+.product-details { flex:1; min-width:300px; }
+.product-details h1 { margin-top:0; font-size:2rem; }
+.product-details p.price { font-size:1.3rem; font-weight:bold; margin:10px 0; }
+.product-details p.desc { margin:15px 0; line-height:1.5; }
+.product-details label { display:block; margin-top:15px; font-weight:bold; }
+.product-details select { width:100%; padding:10px; margin-top:5px; font-size:1rem; border-radius:6px; border:1px solid #ccc; }
+.product-details button { margin-top:20px; padding:12px; width:100%; background:black; color:white; border:none; border-radius:8px; cursor:pointer; font-size:1rem; transition:0.3s ease; }
+.product-details button:hover { background:#333; }
+.whatsapp-btn { margin-top:10px; background:#25D366; }
+.flying-img { position:fixed; width:100px; height:100px; object-fit:cover; border-radius:10px; pointer-events:none; z-index:1000; transition: transform 0.8s ease, opacity 0.8s ease; }
+#cart { position: fixed; right: 20px; bottom: 20px; background: black; color: white; padding: 14px 22px; border-radius: 30px; cursor: pointer; z-index: 999; }
+@media(max-width:768px){ .product-container{ flex-direction:column; gap:30px; } }
+</style>
 </head>
 <body>
 
 <header>
-  <img src="logo.png" alt="NAAR" class="product-logo">
+  <img src="hero.png" alt="NAAR Logo">
 </header>
 
 <div class="product-container">
-  <img src="" alt="Product Image" id="productImage" class="product-image">
-  <h1 class="product-name" id="productName">Product Name</h1>
-  <p class="product-price" id="productPrice">$0.00</p>
-  <p class="product-description" id="productDescription">Product description goes here.</p>
-
-  <div class="size-selector">
-    <label for="size">Size:</label>
-    <select id="size">
-      <option value="S">S (38)</option>
-      <option value="M">M (40)</option>
-      <option value="L">L (42)</option>
-      <option value="XL">XL (44)</option>
-      <option value="XXL">XXL (46)</option>
-    </select>
+  <div class="product-image">
+    <img id="productImage" src="" alt="Product Image">
   </div>
-
-  <div class="buttons">
-    <button class="add-cart" id="addCart">Add to Cart</button>
-    <a href="#" class="whatsapp-order" id="whatsappOrder" target="_blank">Order on WhatsApp</a>
+  <div class="product-details">
+    <h1 id="productName">Product Name</h1>
+    <p class="price" id="productPrice">TAKA 0</p>
+    <p class="desc" id="productDesc">Product description here.</p>
+    <label for="sizeSelect">Size:</label>
+    <select id="sizeSelect">
+      <option value="">Select Size</option>
+      <option value="S">S – 38</option>
+      <option value="M">M – 40</option>
+      <option value="L">L – 42</option>
+      <option value="XL">XL – 44</option>
+      <option value="XXL">XXL – 46</option>
+    </select>
+    <button id="addCartBtn">Add to Cart</button>
+    <button class="whatsapp-btn" id="whatsappBtn">Order on WhatsApp</button>
   </div>
 </div>
 
+<div id="cart">🛒 Cart</div>
+
 <script>
-  // Define product data
-  const products = {
-    sumya: {
-      name: "Sumya Kurti",
-      price: "$40",
-      description: "Elegant cotton kurti perfect for casual and festive occasions.",
-      image: "products/sumya.jpg"
-    },
-    naima: {
-      name: "Naima Kurti",
-      price: "$45",
-      description: "Modern style kurti with subtle embroidery and soft fabric.",
-      image: "products/naima.jpg"
-    },
-    fatiha: {
-      name: "Fatiha Kurti",
-      price: "$50",
-      description: "Stylish kurti with unique patterns, ideal for everyday wear.",
-      image: "products/fatiha.jpg"
-    },
-    aliza: {
-      name: "Aliza Kurti",
-      price: "$55",
-      description: "Premium kurti made from high-quality materials for a chic look.",
-      image: "products/aliza.jpg"
-    },
-    zara: {
-      name: "Zara Kurti",
-      price: "$60",
-      description: "Luxurious kurti with elegant design and fine craftsmanship.",
-      image: "products/zara.jpg"
-    }
-  };
+const products = {
+  sumya: { name: "SUMYA KURTI", price: 550, desc: "Modern style kurti with subtle embroidery and soft fabric.", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1" },
+  naima: { name: "NAIMA SET", price: 650, desc: "Elegant kurti set with soft textures and chic design.", img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633" },
+  fatiha: { name: "FATIHA CO-ORD", price: 650, desc: "Stylish coordinated kurti set with modern embroidery.", img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990" },
+  aliza: { name: "ALIZA KURTI", price: 500, desc: "Classic kurti with elegant patterns and soft fabric.", img: "https://images.unsplash.com/photo-1618354691438-25bc04584c23" },
+  zara: { name: "ZARA SET", price: 700, desc: "Trendy kurti set with delicate embroidery and chic look.", img: "https://images.unsplash.com/photo-1618354691605-c8e56b798a0d" }
+};
 
-  // Get product name from URL query
-  const urlParams = new URLSearchParams(window.location.search);
-  const productKey = urlParams.get('name') || 'sumya'; // default to sumya if none
+// URL params
+const params = new URLSearchParams(window.location.search);
+const productKey = params.get("name");
+const selectedSize = params.get("size");
 
-  const product = products[productKey];
+// Set product info
+if(products[productKey]){
+  const prod = products[productKey];
+  document.getElementById("productName").innerText = prod.name;
+  document.getElementById("productPrice").innerText = `TAKA ${prod.price}`;
+  document.getElementById("productDesc").innerText = prod.desc;
+  document.getElementById("productImage").src = prod.img;
+}
 
-  // Update DOM elements
-  document.getElementById('productImage').src = product.image;
-  document.getElementById('productName').textContent = product.name;
-  document.getElementById('productPrice').textContent = product.price;
-  document.getElementById('productDescription').textContent = product.description;
+// Preselect size
+if(selectedSize){
+  const sizeSelect = document.getElementById("sizeSelect");
+  sizeSelect.value = selectedSize;
+}
 
-  // WhatsApp order
-  const whatsappLink = `https://wa.me/YOUR_NUMBER_HERE?text=Hi, I want to order ${product.name} in size ${document.getElementById('size').value}`;
-  const whatsappOrder = document.getElementById('whatsappOrder');
-  whatsappOrder.href = whatsappLink;
+// Cart
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-  // Update WhatsApp link on size change
-  document.getElementById('size').addEventListener('change', function() {
-    whatsappOrder.href = `https://wa.me/YOUR_NUMBER_HERE?text=Hi, I want to order ${product.name} in size ${this.value}`;
+// Add to cart with flying animation to cart icon
+document.getElementById("addCartBtn").addEventListener("click", ()=>{
+  const size = document.getElementById("sizeSelect").value;
+  if(!size){ alert("Please select a size"); return; }
+  const prod = products[productKey];
+
+  const existingIndex = cart.findIndex(i=>i.name===prod.name && i.size===size);
+  if(existingIndex>-1) cart[existingIndex].qty +=1;
+  else cart.push({name:prod.name, size, price:prod.price, img:prod.img, qty:1});
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  // Flying animation to cart icon
+  const img = document.getElementById("productImage");
+  const flyingImg = img.cloneNode(true);
+  flyingImg.classList.add("flying-img");
+  document.body.appendChild(flyingImg);
+  const imgRect = img.getBoundingClientRect();
+  const cartRect = document.getElementById("cart").getBoundingClientRect();
+  flyingImg.style.left = imgRect.left+"px";
+  flyingImg.style.top = imgRect.top+"px";
+  requestAnimationFrame(()=>{
+    flyingImg.style.transform = `translate(${cartRect.left-imgRect.left}px, ${cartRect.top-imgRect.top}px) scale(0.1)`;
+    flyingImg.style.opacity='0.5';
   });
+  setTimeout(()=>{ flyingImg.remove(); },800);
 
-  // Simple add to cart (for demo)
-  document.getElementById('addCart').addEventListener('click', function() {
-    alert(`${product.name} (Size: ${document.getElementById('size').value}) added to cart!`);
-  });
+  alert("Added to cart!");
+});
+
+// WhatsApp order
+document.getElementById("whatsappBtn").addEventListener("click", ()=>{
+  if(cart.length===0){
+    alert("Cart is empty. Adding this product to cart first.");
+    document.getElementById("addCartBtn").click();
+  }
+  let msg = `Hello NAAR, I want to order:%0A`;
+  cart.forEach((i,n)=> msg+=`${n+1}. ${i.name} - ${i.size} - TAKA ${i.price} x${i.qty}%0A`);
+  window.open(`https://wa.me/8801819638383?text=${msg}`,"_blank");
+});
 </script>
 
 </body>
