@@ -3,143 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NAAR | Product</title>
-
+<title>NAAR Product</title>
 <style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #f5f0e1;
-  color: #111;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 30px 20px;
-}
-
-.top {
-  display: flex;
-  gap: 30px;
-  flex-wrap: wrap;
-}
-
-.top img {
-  max-width: 450px;
-  width: 100%;
-  border-radius: 8px;
-}
-
-.info {
-  flex: 1;
-}
-
-select {
-  padding: 10px;
-  margin-top: 10px;
-}
-
-button {
-  padding: 12px 20px;
-  margin-top: 15px;
-  background: black;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-/* SIZE CHART */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 40px;
-}
-
-td, th {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-}
-
-/* RELATED */
-.related {
-  margin-top: 60px;
-}
-
-.related img {
-  width: 100%;
-  border-radius: 6px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-}
+/* --- COPY YOUR CURRENT CSS FROM index.html --- */
+html { scroll-behavior: smooth; }
+body { margin:0;font-family:'Segoe UI',sans-serif;background:#F6F1E7;color:#111; }
+header { background:#000;color:#fff;padding:18px 40px;display:flex;justify-content:center;align-items:center;position:sticky;top:0;z-index:1000; }
+header img { height:50px;margin-right:20px; }
+nav { display:flex; gap:25px; }
+nav a { color:white;text-decoration:none;font-size:0.9rem; transition: opacity 0.3s ease; }
+nav a:hover { opacity:0.7; }
+.hero { height:50vh; display:flex; align-items:center; justify-content:center; }
+.hero-logo { width:50%; max-width:420px; height:auto; }
+section { padding:70px 40px; max-width:1200px;margin:auto; }
+section h2 { margin-bottom:35px; letter-spacing:2px; }
+.product { background:white;border-radius:14px;overflow:hidden;box-shadow:0 15px 25px rgba(0,0,0,0.08); transition:transform 0.3s ease; max-width:400px; margin:auto; }
+.product img { width:100%; height:400px; object-fit:cover; }
+.product-content { padding:18px; }
+.product select { width:100%; padding:9px; margin-top:8px; }
+.size-note { font-size:0.8rem; color:#666; margin-top:5px; }
+.product button { background:black;color:white;border:none;padding:12px;width:100%; cursor:pointer; margin-top:12px; transition: background 0.3s ease; }
+.product button:hover { background:#333; }
+#cart { position:fixed; right:20px; bottom:20px; background:black;color:white;padding:14px 22px;border-radius:30px; cursor:pointer; z-index:999; }
+#cartItems { position:fixed; right:20px; bottom:80px; background:white;color:black;width:360px;padding:20px;border-radius:14px; box-shadow:0 15px 30px rgba(0,0,0,0.2); opacity:0; pointer-events:none; transform:translateY(20px); transition:all 0.35s ease; }
+#cartItems.active { opacity:1; pointer-events:auto; transform:translateY(0); }
+.cart-item { display:flex; gap:10px; margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:8px; }
+.cart-item img { width:60px; height:60px; object-fit:cover; border-radius:8px; }
+.flying-img { position:fixed; width:100px; height:100px; object-fit:cover; border-radius:10px; pointer-events:none; z-index:1000; transition:transform 0.8s ease, opacity 0.8s ease; }
+footer { background:black; color:white; text-align:center; padding:35px; margin-top:60px; }
+.whatsapp { position:fixed; left:20px; bottom:20px; background:#25D366;color:white;padding:14px 22px;border-radius:30px; text-decoration:none; font-weight:bold; z-index:999; }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#product">Product</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
 
-<a href="index.html">← Back to shop</a>
+<div class="hero">
+  <img src="hero.png" class="hero-logo" alt="NAAR">
+</div>
 
-<div class="top">
-  <img id="productImg">
-
-  <div class="info">
-    <h1 id="productName"></h1>
-    <h3 id="productPrice"></h3>
-
-    <p>
-      Premium womenwear crafted for comfort and elegance.
-      Suitable for casual & festive wear.
-    </p>
-
-    <label>Select Size</label><br>
-    <select>
-      <option>S (38)</option>
-      <option>M (40)</option>
-      <option>L (42)</option>
-      <option>XL (44)</option>
-      <option>XXL (46)</option>
-    </select>
-
-    <br>
-    <button>Add to Cart</button>
+<section id="product">
+  <h2 id="productName">Product Name</h2>
+  <div class="product">
+    <img id="productImg" src="" alt="Product Image">
+    <div class="product-content">
+      <p id="productPrice">TAKA 0</p>
+      <select class="size-select">
+        <option value="">Select Size</option>
+        <option value="S">S – 38</option>
+        <option value="M">M – 40</option>
+        <option value="L">L – 42</option>
+        <option value="XL">XL – 44</option>
+        <option value="XXL">XXL – 46</option>
+      </select>
+      <div class="size-note">Chest size in inches</div>
+      <button id="addCartBtn">Add to Cart</button>
+    </div>
   </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>Email: naar.bd@gmail.com</p>
+  <p>Instagram: @naar.bd</p>
+  <p>Facebook: NAAR BD</p>
+</section>
+
+<footer>© 2025 NAAR</footer>
+
+<div id="cart" onclick="toggleCart()">🛒 Cart</div>
+<div id="cartItems">
+  <h3>Your Cart</h3>
+  <div id="items"></div>
+  <p id="totalItems"></p>
+  <p id="totalPrice"></p>
+  <button onclick="checkout()" style="width:100%;padding:10px;background:black;color:white;border:none;border-radius:8px;cursor:pointer;">Checkout</button>
 </div>
 
-<h2>Size Chart</h2>
-<table>
-<tr><th>Size</th><th>Bust</th><th>Length</th></tr>
-<tr><td>S</td><td>38</td><td>44</td></tr>
-<tr><td>M</td><td>40</td><td>45</td></tr>
-<tr><td>L</td><td>42</td><td>46</td></tr>
-<tr><td>XL</td><td>44</td><td>47</td></tr>
-<tr><td>XXL</td><td>46</td><td>48</td></tr>
-</table>
-
-<div class="related">
-<h2>You may also like</h2>
-<div class="grid">
-<img src="kurti2.jpg">
-<img src="kurti3.jpg">
-<img src="kurti4.jpg">
-<img src="kurti5.jpg">
-</div>
-</div>
-
-</div>
+<a class="whatsapp" onclick="sendWhatsApp()">WhatsApp Order</a>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-document.getElementById("productName").innerText = params.get("name");
-document.getElementById("productPrice").innerText = "৳" + params.get("price");
-document.getElementById("productImg").src = params.get("img");
-</script>
+// --- PRODUCT DATA ---
+const products = {
+  sumya: {
+    name: "SUMYA KURTI",
+    price: 550,
+    img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1"
+  },
+  naima: {
+    name: "NAIMA KURTI",
+    price: 650,
+    img: "https://images.unsplash.com/photo-1620074962623-27d2b7fef8e6"
+  },
+  fatiha: {
+    name: "FATIHA KURTI",
+    price: 500,
+    img: "https://images.unsplash.com/photo-1582582494703-ecdfdbff77bb"
+  },
+  aliza: {
+    name: "ALIZA KURTI",
+    price: 700,
+    img: "https://images.unsplash.com/photo-1598970434795-0c54fe7c0642"
+  },
+  zara: {
+    name: "ZARA KURTI",
+    price: 600,
+    img: "https://images.unsplash.com/photo-1586864381234-6e2e48e9c69b"
+  }
+};
 
+// --- GET QUERY PARAM ---
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+const productKey = getQueryParam('name') || 'sumya';
+const productData = products[productKey];
+
+// --- UPDATE PAGE ---
+document.getElementById('productName').innerText = productData.name;
+document.getElementById('productPrice').innerText = `TAKA ${productData.price}`;
+document.getElementById('productImg').src = productData.img;
+document.getElementById('productImg').alt = productData.name;
+
+// --- CART LOGIC ---
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.getElementById('addCartBtn').addEventListener('click', function(){
+  const sizeSelect = document.querySelector('.size-select');
+  const size = sizeSelect.value;
+  if(!size){ alert('Please select a size'); return; }
+  const existingIndex = cart.findIndex(i=>i.name===productData.name && i.size===size);
+  if(existingIndex>-1) cart[existingIndex].qty +=1;
+  else cart.push({name: productData.name, size, price: productData.price, img: productData.img, qty:1});
+  localStorage.setItem('cart', JSON.stringify(cart));
+  renderCart();
+
+  // flying animation
+  const img = document.getElementById('productImg');
+  const flyingImg = img.cloneNode(true);
+  flyingImg.classList.add('flying-img');
+  document.body.appendChild(flyingImg);
+  const imgRect = img.getBoundingClientRect();
+  const cartRect = document.getElementById('cart').getBoundingClientRect();
+  flyingImg.style.left = imgRect.left+'px';
+  flyingImg.style.top = imgRect.top+'px';
+  requestAnimationFrame(()=>{ flyingImg.style.transform=`translate(${cartRect.left-imgRect.left}px, ${cartRect.top-imgRect.top}px) scale(0.1)`; flyingImg.style.opacity='0.5'; });
+  setTimeout(()=>{ flyingImg.remove(); },800);
+});
+
+function toggleCart(){ document.getElementById("cartItems").classList.toggle("active"); }
+function renderCart(){ 
+  const items = document.getElementById('items'); items.innerHTML=''; 
+  let total=0; 
+  cart.forEach((i,index)=>{ total+=i.price*i.qty;
+    items.innerHTML+=`<div class="cart-item">
+      <img src="${i.img}">
+      <div><strong>${i.name}</strong><br>Size: ${i.size}<br>TAKA ${i.price} x 
+      <input type="number" min="1" value="${i.qty}" onchange="updateQty(${index},this.value)" style="width:45px;">
+      <button onclick="removeItem(${index})" style="margin-left:10px;background:red;color:white;border:none;padding:2px 6px;border-radius:4px;cursor:pointer;">X</button>
+      </div></div>`; 
+  }); 
+  document.getElementById('totalItems').innerText=`Items: ${cart.reduce((a,b)=>a+b.qty,0)}`; 
+  document.getElementById('totalPrice').innerText=`Total: TAKA ${total}`; 
+}
+function updateQty(index,value){ value=parseInt(value); if(value<1)value=1; cart[index].qty=value; localStorage.setItem('cart',JSON.stringify(cart)); renderCart(); }
+function removeItem(index){ cart.splice(index,1); localStorage.setItem('cart',JSON.stringify(cart)); renderCart(); }
+function checkout(){ if(cart.length===0){ alert("Cart is empty"); return; } let msg="Hello NAAR, I want to order:%0A"; cart.forEach((i,n)=> msg+=`${n+1}. ${i.name} - ${i.size} - TAKA ${i.price} x${i.qty}%0A`); window.open("https://wa.me/8801819638383?text="+msg,"_blank"); }
+function sendWhatsApp(){ checkout(); }
+renderCart();
+</script>
 </body>
 </html>
