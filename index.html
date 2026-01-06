@@ -10,38 +10,51 @@ html { scroll-behavior: smooth; }
 body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #F6F1E7; color: #111; }
 
 /* HEADER */
-header { background: #000; color: #fff; padding: 18px 40px; display: flex; justify-content: center; align-items: center; position: sticky; top: 0; z-index: 1000; }
+header { background: #000; color: #fff; padding: 18px 40px; display: flex; justify-content: center; position: sticky; top: 0; z-index: 1000; }
 nav { display: flex; gap: 25px; }
-nav a { color: white; text-decoration: none; font-size: 0.9rem; transition: opacity 0.3s ease; }
-nav a:hover { opacity: 0.7; }
+nav a { color: white; text-decoration: none; font-size: 0.9rem; }
 
 /* HERO */
 .hero { height: 90vh; display: flex; align-items: center; justify-content: center; }
-.hero-logo { width: 70%; max-width: 420px; transition: opacity 0.4s ease, transform 0.4s ease; }
+.hero-logo { width: 70%; max-width: 420px; }
 
 /* SECTIONS */
 section { padding: 70px 40px; max-width: 1200px; margin: auto; }
 section h2 { margin-bottom: 35px; letter-spacing: 2px; }
 
+/* LOOKBOOK */
+.lookbook { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 25px; }
+.lookbook img { width:100%; height:380px; object-fit:cover; border-radius:14px; }
+
 /* PRODUCTS */
 .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 35px; }
-.product { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 25px rgba(0,0,0,0.08); transition: transform 0.3s ease; cursor: pointer; }
-.product:hover { transform: translateY(-6px); }
+.product { background: white; border-radius: 14px; overflow: hidden; box-shadow: 0 15px 25px rgba(0,0,0,0.08); cursor:pointer; }
 .product img { width: 100%; height: 340px; object-fit: cover; }
 .product-content { padding: 18px; }
 .product select { width: 100%; padding: 9px; margin-top: 8px; }
-.size-note { font-size: 0.8rem; color: #666; margin-top: 5px; }
-.product button { background: black; color: white; border: none; padding: 12px; width: 100%; cursor: pointer; margin-top: 12px; }
+.size-note { font-size:0.8rem;color:#666;margin-top:5px;}
+.product button { background: black; color: white; border: none; padding: 12px; width: 100%; margin-top: 12px; cursor:pointer; }
 
 /* CART */
 #cart { position: fixed; right: 20px; bottom: 20px; background: black; color: white; padding: 14px 22px; border-radius: 30px; cursor: pointer; z-index: 999; }
 #cartItems { position: fixed; right: 20px; bottom: 80px; background: white; width: 360px; padding: 20px; border-radius: 14px; opacity: 0; pointer-events: none; transition: 0.3s; }
 #cartItems.active { opacity: 1; pointer-events: auto; }
 
-.cart-item { display: flex; gap: 10px; margin-bottom: 15px; border-bottom:1px solid #ddd; padding-bottom:8px; }
-.cart-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+.cart-item { display:flex; gap:10px; margin-bottom:12px; border-bottom:1px solid #ddd; padding-bottom:8px; }
+.cart-item img { width:60px; height:60px; border-radius:8px; object-fit:cover; }
+.qty { display:flex; gap:8px; align-items:center; margin-top:6px; }
+.qty button { padding:2px 8px; }
 
-.flying-img { position: fixed; width: 100px; height: 100px; object-fit: cover; border-radius: 10px; pointer-events: none; z-index: 1000; transition: transform 0.8s ease, opacity 0.8s ease; }
+/* FLYING IMAGE */
+.flying-img {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 2000;
+  transition: all 0.8s ease;
+}
 
 /* FOOTER */
 footer { background: black; color: white; text-align: center; padding: 35px; margin-top: 60px; }
@@ -54,115 +67,126 @@ footer { background: black; color: white; text-align: center; padding: 35px; mar
 <body>
 
 <header>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#shop">Shop</a>
-    <a href="#contact">Contact</a>
-  </nav>
+<nav>
+<a href="#">Home</a>
+<a href="#lookbook">Lookbook</a>
+<a href="#shop">Shop</a>
+<a href="#contact">Contact</a>
+</nav>
 </header>
 
 <div class="hero">
-  <img src="hero.png" class="hero-logo" id="heroLogo">
+<img src="hero.png" class="hero-logo">
 </div>
 
+<!-- LOOKBOOK -->
+<section id="lookbook">
+<h2>LOOKBOOK</h2>
+<div class="lookbook">
+<img src="https://images.unsplash.com/photo-1520962918287-7448c1b2f1bd">
+<img src="https://images.unsplash.com/photo-1520974735194-2c59d86a4c5c">
+<img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f">
+</div>
+</section>
+
+<!-- SHOP -->
 <section id="shop">
 <h2>Shop Womenwear</h2>
-
 <div class="products">
 
 <!-- SUMYA -->
-<div class="product" onclick="goToProduct('sumya', this)">
-  <img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1">
-  <div class="product-content">
-    <h3>SUMYA KURTI</h3>
-    <p>TAKA 550</p>
-    <select class="size-select" onclick="event.stopPropagation()">
-      <option value="">Select Size</option>
-      <option value="S">S – 38</option>
-      <option value="M">M – 40</option>
-      <option value="L">L – 42</option>
-      <option value="XL">XL – 44</option>
-      <option value="XXL">XXL – 46</option>
-    </select>
-    <div class="size-note">Chest size in inches</div>
-    <button onclick="event.stopPropagation()">Add to Cart</button>
-  </div>
+<div class="product">
+<img src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1">
+<div class="product-content">
+<h3>SUMYA KURTI</h3>
+<p>TAKA 550</p>
+<select class="size-select">
+<option value="">Select Size</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
+</select>
+<div class="size-note">Chest size in inches</div>
+<button>Add to Cart</button>
+</div>
 </div>
 
 <!-- NAIMA -->
-<div class="product" onclick="goToProduct('naima', this)">
-  <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633">
-  <div class="product-content">
-    <h3>NAIMA SET</h3>
-    <p>TAKA 650</p>
-    <select class="size-select" onclick="event.stopPropagation()">
-      <option value="">Select Size</option>
-      <option value="S">S – 38</option>
-      <option value="M">M – 40</option>
-      <option value="L">L – 42</option>
-      <option value="XL">XL – 44</option>
-      <option value="XXL">XXL – 46</option>
-    </select>
-    <div class="size-note">Chest size in inches</div>
-    <button onclick="event.stopPropagation()">Add to Cart</button>
-  </div>
+<div class="product">
+<img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633">
+<div class="product-content">
+<h3>NAIMA SET</h3>
+<p>TAKA 650</p>
+<select class="size-select">
+<option value="">Select Size</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
+</select>
+<div class="size-note">Chest size in inches</div>
+<button>Add to Cart</button>
+</div>
 </div>
 
 <!-- FATIHA -->
-<div class="product" onclick="goToProduct('fatiha', this)">
-  <img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990">
-  <div class="product-content">
-    <h3>FATIHA CO-ORD</h3>
-    <p>TAKA 650</p>
-    <select class="size-select" onclick="event.stopPropagation()">
-      <option value="">Select Size</option>
-      <option value="S">S – 38</option>
-      <option value="M">M – 40</option>
-      <option value="L">L – 42</option>
-      <option value="XL">XL – 44</option>
-      <option value="XXL">XXL – 46</option>
-    </select>
-    <div class="size-note">Chest size in inches</div>
-    <button onclick="event.stopPropagation()">Add to Cart</button>
-  </div>
+<div class="product">
+<img src="https://images.unsplash.com/photo-1618354691373-d851c5c3a990">
+<div class="product-content">
+<h3>FATIHA CO-ORD</h3>
+<p>TAKA 650</p>
+<select class="size-select">
+<option value="">Select Size</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
+</select>
+<div class="size-note">Chest size in inches</div>
+<button>Add to Cart</button>
+</div>
 </div>
 
 <!-- ALIZA -->
-<div class="product" onclick="goToProduct('aliza', this)">
-  <img src="https://images.unsplash.com/photo-1618354691438-25bc04584c23">
-  <div class="product-content">
-    <h3>ALIZA KURTI</h3>
-    <p>TAKA 500</p>
-    <select class="size-select" onclick="event.stopPropagation()">
-      <option value="">Select Size</option>
-      <option value="S">S – 38</option>
-      <option value="M">M – 40</option>
-      <option value="L">L – 42</option>
-      <option value="XL">XL – 44</option>
-      <option value="XXL">XXL – 46</option>
-    </select>
-    <div class="size-note">Chest size in inches</div>
-    <button onclick="event.stopPropagation()">Add to Cart</button>
-  </div>
+<div class="product">
+<img src="https://images.unsplash.com/photo-1618354691438-25bc04584c23">
+<div class="product-content">
+<h3>ALIZA KURTI</h3>
+<p>TAKA 500</p>
+<select class="size-select">
+<option value="">Select Size</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
+</select>
+<div class="size-note">Chest size in inches</div>
+<button>Add to Cart</button>
+</div>
 </div>
 
 <!-- ZARA -->
-<div class="product" onclick="goToProduct('zara', this)">
-  <img src="https://images.unsplash.com/photo-1618354691605-c8e56b798a0d">
-  <div class="product-content">
-    <h3>ZARA SET</h3>
-    <p>TAKA 700</p>
-    <select class="size-select" onclick="event.stopPropagation()">
-      <option value="">Select Size</option>
-      <option value="S">S – 38</option>
-      <option value="M">M – 40</option>
-      <option value="L">L – 42</option>
-      <option value="XL">XL – 44</option>
-      <option value="XXL">XXL – 46</option>
-    </select>
-    <div class="size-note">Chest size in inches</div>
-    <button onclick="event.stopPropagation()">Add to Cart</button>
-  </div>
+<div class="product">
+<img src="https://images.unsplash.com/photo-1618354691605-c8e56b798a0d">
+<div class="product-content">
+<h3>ZARA SET</h3>
+<p>TAKA 700</p>
+<select class="size-select">
+<option value="">Select Size</option>
+<option value="S">S – 38</option>
+<option value="M">M – 40</option>
+<option value="L">L – 42</option>
+<option value="XL">XL – 44</option>
+<option value="XXL">XXL – 46</option>
+</select>
+<div class="size-note">Chest size in inches</div>
+<button>Add to Cart</button>
+</div>
 </div>
 
 </div>
@@ -173,80 +197,102 @@ footer { background: black; color: white; text-align: center; padding: 35px; mar
 <div id="cart" onclick="toggleCart()">🛒 Cart</div>
 
 <div id="cartItems">
-  <h3>Your Cart</h3>
-  <div id="items"></div>
-  <p id="totalItems"></p>
-  <p id="totalPrice"></p>
-  <button onclick="checkout()" style="width:100%;padding:10px;background:black;color:white;border:none;border-radius:8px;">Checkout</button>
+<h3>Your Cart</h3>
+<div id="items"></div>
+<p id="totalPrice"></p>
+<button onclick="checkout()" style="width:100%;padding:10px;background:black;color:white;border:none;border-radius:8px;">Checkout</button>
 </div>
 
-<div class="whatsapp" onclick="sendWhatsApp()">WhatsApp Order</div>
+<div class="whatsapp" onclick="checkout()">WhatsApp Order</div>
 
 <script>
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-function goToProduct(name, element){
-  const size = element.querySelector('.size-select').value;
-  const param = size ? `&size=${size}` : '';
-  window.location.href = `product.html?name=${name}${param}`;
-}
+// Add to cart with flying image
+document.querySelectorAll('.product button').forEach(btn=>{
+btn.onclick = (e)=>{
+const product = e.target.closest('.product');
+const img = product.querySelector('img');
+const name = product.querySelector('h3').innerText;
+const price = parseInt(product.querySelector('p').innerText.replace('TAKA ',''));
+const size = product.querySelector('.size-select').value;
+if(!size){ alert("Please select a size"); return; }
 
-document.querySelectorAll('.product').forEach(product => {
-  const btn = product.querySelector('button');
-  btn.addEventListener('click', () => {
-    const name = product.querySelector('h3').textContent;
-    const price = parseFloat(product.querySelector('p').textContent.replace('TAKA ',''));
-    const size = product.querySelector('.size-select').value;
-    const img = product.querySelector('img').src;
+fly(img);
 
-    if(!size){ alert("Please select a size"); return; }
-
-    const existing = cart.find(i => i.name===name && i.size===size);
-    if(existing) existing.qty += 1;
-    else cart.push({name, price, size, img, qty:1});
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    renderCart();
-  });
+const found = cart.find(i=>i.name===name && i.size===size);
+found ? found.qty++ : cart.push({name,price,size,img:img.src,qty:1});
+save();
+};
 });
 
-function renderCart(){
-  const items = document.getElementById("items");
-  items.innerHTML = "";
-  let total = 0;
-  let count = 0;
-
-  cart.forEach(i => {
-    total += i.price * i.qty;
-    count += i.qty;
-    items.innerHTML += `
-      <div class="cart-item">
-        <img src="${i.img}">
-        <div>
-          <strong>${i.name}</strong><br>
-          Size: ${i.size}<br>
-          TAKA ${i.price} × ${i.qty}
-        </div>
-      </div>`;
-  });
-
-  document.getElementById("totalItems").innerText = `Items: ${count}`;
-  document.getElementById("totalPrice").innerText = `Total: TAKA ${total}`;
+// Flying image animation
+function fly(img){
+const f = img.cloneNode();
+const r = img.getBoundingClientRect();
+f.className = "flying-img";
+f.style.left = r.left+"px";
+f.style.top = r.top+"px";
+document.body.appendChild(f);
+setTimeout(()=>{
+const c = document.getElementById("cart").getBoundingClientRect();
+f.style.left = c.left+"px";
+f.style.top = c.top+"px";
+f.style.opacity = 0;
+},10);
+setTimeout(()=>f.remove(),800);
 }
 
+// Render cart
+function render(){
+let total=0;
+items.innerHTML="";
+cart.forEach((i,idx)=>{
+total += i.price*i.qty;
+items.innerHTML += `
+<div class="cart-item">
+<img src="${i.img}">
+<div>
+<strong>${i.name}</strong><br>Size: ${i.size}
+<div class="qty">
+<button onclick="change(${idx},-1)">−</button>
+${i.qty}
+<button onclick="change(${idx},1)">+</button>
+</div>
+TAKA ${i.price} × ${i.qty}
+</div>
+</div>`;
+});
+document.getElementById("totalPrice").innerText = "Total: TAKA "+total;
+}
+
+// Change quantity
+function change(i,d){
+cart[i].qty += d;
+if(cart[i].qty<=0) cart.splice(i,1);
+save();
+}
+
+// Save & render
+function save(){
+localStorage.setItem('cart',JSON.stringify(cart));
+render();
+}
+
+// Toggle cart display
 function toggleCart(){
-  document.getElementById("cartItems").classList.toggle("active");
+document.getElementById("cartItems").classList.toggle("active");
 }
 
+// Checkout via WhatsApp
 function checkout(){
-  if(cart.length===0){ alert("Cart is empty"); return; }
-  let msg = "Hello NAAR, I want to order:%0A";
-  cart.forEach((i,n)=> msg += `${n+1}. ${i.name} (${i.size}) - TAKA ${i.price} x${i.qty}%0A`);
-  window.open("https://wa.me/8801819638383?text="+msg,"_blank");
+if(cart.length===0){ alert("Cart is empty"); return; }
+let msg = "Hello NAAR, I want to order:%0A";
+cart.forEach((i,n)=> msg += `${n+1}. ${i.name} (${i.size}) - TAKA ${i.price} x${i.qty}%0A`);
+window.open("https://wa.me/8801819638383?text="+msg);
 }
 
-function sendWhatsApp(){ checkout(); }
-renderCart();
+render();
 </script>
 
 </body>
