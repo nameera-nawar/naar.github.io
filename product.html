@@ -4,30 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NAAR | Product</title>
-
 <style>
 body{
   margin:0;
   font-family:'Poppins', sans-serif;
-  background:#fffdf9;
+  background:#F6F1E7;
   color:#2d2d2d;
 }
 
-/* HEADER */
-header{
-  background:white;
-  padding:20px;
-  display:flex;
-  justify-content:center;
-  border-bottom:1px solid #f1eae0;
-  position:sticky;
-  top:0;
-  z-index:1000;
-}
-
-header img{ height:45px; }
-
-/* PRODUCT */
+/* PRODUCT CONTAINER */
 .product-container{
   max-width:1200px;
   margin:80px auto;
@@ -57,6 +42,8 @@ header img{ height:45px; }
   font-size:2.2rem;
   font-weight:500;
   margin:0;
+  padding-bottom:8px;
+  border-bottom:2px solid #c78da3;
 }
 
 .price{
@@ -112,7 +99,7 @@ button{
   color:#999;
 }
 
-/* RELATED */
+/* RELATED SECTION */
 .related-section{
   max-width:1200px;
   margin:100px auto;
@@ -124,6 +111,9 @@ button{
   font-weight:500;
   margin-bottom:40px;
   color:#c78da3;
+  border-bottom:2px solid #c78da3;
+  display:inline-block;
+  padding-bottom:8px;
 }
 
 .related-grid{
@@ -195,6 +185,16 @@ button{
   right:20px;
 }
 
+/* FOOTER INFO */
+footer{
+  text-align:center;
+  margin-top:100px;
+  padding:30px 20px;
+  color:#555;
+  font-size:0.9rem;
+  border-top:1px solid #e0d8ce;
+}
+
 @media(max-width:768px){
   .product-container{
     flex-direction:column;
@@ -203,12 +203,7 @@ button{
 }
 </style>
 </head>
-
 <body>
-
-<header>
-  <img src="hero.png">
-</header>
 
 <div class="product-container">
   <div class="product-gallery">
@@ -246,11 +241,15 @@ button{
 <div id="cart">Cart <span id="cart-count">0</span></div>
 <div class="success-popup" id="successPopup">Added to cart ♡</div>
 
-<script>
+<footer>
+  NAAR | Fashion Boutique • Contact: 01819638383 • Free Delivery Chattogram
+</footer>
 
+<script>
 const products={
   sumya:{name:"SUMYA KURTI",price:550,desc:"Soft feminine embroidered kurti.",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1"},
   naima:{name:"NAIMA SET",price:650,desc:"Elegant pastel kurti set.",img:"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633"},
+  fatiha:{name:"FATIHA CO-ORD",price:650,desc:"Stylish coordinated kurti set with modern embroidery.",img:"https://images.unsplash.com/photo-1618354691373-d851c5c3a990"},
   aliza:{name:"ALIZA KURTI",price:500,desc:"Minimal everyday kurti.",img:"https://images.unsplash.com/photo-1618354691438-25bc04584c23"},
   zara:{name:"ZARA SET",price:700,desc:"Modern coordinated set.",img:"https://images.unsplash.com/photo-1618354691605-c8e56b798a0d"}
 };
@@ -258,13 +257,9 @@ const products={
 /* SAFE AUTO LOAD */
 const params=new URLSearchParams(window.location.search);
 let key=params.get("name");
-
-if(!products[key]){
-  key=Object.keys(products)[0]; // auto load first product
-}
+if(!products[key]) key=Object.keys(products)[0];
 
 const product=products[key];
-
 document.getElementById("productName").innerText=product.name;
 document.getElementById("productPrice").innerText=`TAKA ${product.price}`;
 document.getElementById("productDesc").innerText=product.desc;
@@ -287,7 +282,7 @@ Object.keys(products).forEach(p=>{
   }
 });
 
-/* CART */
+/* CART + FLYING ANIMATION */
 let cart=JSON.parse(localStorage.getItem("cart"))||[];
 
 function updateCartCount(){
@@ -298,7 +293,7 @@ updateCartCount();
 
 document.getElementById("addCartBtn").onclick=()=>{
   const size=document.getElementById("sizeSelect").value;
-  if(!size) return;
+  if(!size){ alert("Please select a size"); return; }
 
   const existing=cart.find(i=>i.name===product.name && i.size===size);
   if(existing) existing.qty++;
@@ -306,6 +301,25 @@ document.getElementById("addCartBtn").onclick=()=>{
 
   localStorage.setItem("cart",JSON.stringify(cart));
   updateCartCount();
+
+  // Flying animation
+  const img=document.getElementById("mainImage");
+  const flyingImg=img.cloneNode(true);
+  flyingImg.style.position="fixed";
+  flyingImg.style.width=img.offsetWidth+"px";
+  flyingImg.style.height=img.offsetHeight+"px";
+  flyingImg.style.left=img.getBoundingClientRect().left+"px";
+  flyingImg.style.top=img.getBoundingClientRect().top+"px";
+  flyingImg.style.transition="all 0.8s ease-in-out";
+  flyingImg.style.zIndex=9999;
+  document.body.appendChild(flyingImg);
+
+  const cartRect=document.getElementById("cart").getBoundingClientRect();
+  requestAnimationFrame(()=>{
+    flyingImg.style.transform=`translate(${cartRect.left - img.getBoundingClientRect().left}px, ${cartRect.top - img.getBoundingClientRect().top}px) scale(0.1)`;
+    flyingImg.style.opacity='0.5';
+  });
+  setTimeout(()=>flyingImg.remove(),800);
 
   const popup=document.getElementById("successPopup");
   popup.classList.add("show");
@@ -315,19 +329,15 @@ document.getElementById("addCartBtn").onclick=()=>{
 /* WHATSAPP */
 document.getElementById("whatsappBtn").onclick=()=>{
   const size=document.getElementById("sizeSelect").value;
-  if(!size) return;
-
-  const message=
-`Hello NAAR,
+  if(!size){ alert("Please select size"); return; }
+  const message=`Hello NAAR,
 I want to order:
 
 Product: ${product.name}
 Size: ${size}
 Price: TAKA ${product.price}`;
-
   window.open(`https://wa.me/8801819638383?text=${encodeURIComponent(message)}`,"_blank");
 };
-
 </script>
 
 </body>
