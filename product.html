@@ -4,129 +4,385 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NAAR | Product</title>
+
 <style>
-html { scroll-behavior: smooth; }
-body { margin:0; font-family: 'Segoe UI', sans-serif; background:#F6F1E7; color:#111; }
-header { background:#000; padding:18px 40px; display:flex; justify-content:center; align-items:center; position:sticky; top:0; z-index:1000; }
-header img { height:50px; }
-.product-container { max-width:1100px; margin:50px auto; display:flex; gap:50px; flex-wrap:wrap; align-items:flex-start; }
-.product-image { flex:1; min-width:300px; }
-.product-image img { width:100%; border-radius:14px; object-fit:cover; transition: transform 0.3s ease; }
-.product-details { flex:1; min-width:300px; }
-.product-details h1 { margin-top:0; font-size:2rem; }
-.product-details p.price { font-size:1.3rem; font-weight:bold; margin:10px 0; }
-.product-details p.desc { margin:15px 0; line-height:1.5; }
-.product-details label { display:block; margin-top:15px; font-weight:bold; }
-.product-details select { width:100%; padding:10px; margin-top:5px; font-size:1rem; border-radius:6px; border:1px solid #ccc; }
-.product-details button { margin-top:20px; padding:12px; width:100%; background:black; color:white; border:none; border-radius:8px; cursor:pointer; font-size:1rem; transition:0.3s ease; }
-.product-details button:hover { background:#333; }
-.whatsapp-btn { margin-top:10px; background:#25D366; }
-.flying-img { position:fixed; width:100px; height:100px; object-fit:cover; border-radius:10px; pointer-events:none; z-index:1000; transition: transform 0.8s ease, opacity 0.8s ease; }
-#cart { position: fixed; right: 20px; bottom: 20px; background: black; color: white; padding: 14px 22px; border-radius: 30px; cursor: pointer; z-index: 999; }
-@media(max-width:768px){ .product-container{ flex-direction:column; gap:30px; } }
+body{
+  margin:0;
+  font-family:'Poppins', sans-serif;
+  background:#fffdf9;
+  color:#2d2d2d;
+}
+
+/* HEADER */
+header{
+  background:white;
+  padding:20px;
+  display:flex;
+  justify-content:center;
+  border-bottom:1px solid #f1eae0;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+header img{ height:45px; }
+
+/* PRODUCT SECTION */
+.product-container{
+  max-width:1200px;
+  margin:80px auto;
+  display:flex;
+  gap:80px;
+  padding:0 30px;
+  flex-wrap:wrap;
+}
+
+.product-gallery{
+  flex:1;
+  min-width:320px;
+}
+
+.main-image{
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(255,192,203,0.15);
+}
+
+.thumbnail-container{
+  display:flex;
+  gap:12px;
+  margin-top:15px;
+}
+
+.thumbnail{
+  width:75px;
+  height:95px;
+  object-fit:cover;
+  border-radius:12px;
+  cursor:pointer;
+  opacity:0.6;
+  transition:0.3s ease;
+}
+
+.thumbnail.active,
+.thumbnail:hover{
+  opacity:1;
+  border:2px solid #f5c6d6;
+}
+
+/* DETAILS */
+.product-details{
+  flex:1;
+  min-width:320px;
+}
+
+.product-details h1{
+  font-size:2.2rem;
+  font-weight:500;
+  margin:0;
+}
+
+.price{
+  font-size:1.4rem;
+  color:#c78da3;
+  margin:15px 0;
+}
+
+.desc{
+  color:#777;
+  line-height:1.7;
+  margin-bottom:30px;
+}
+
+select{
+  width:100%;
+  padding:14px;
+  margin-top:8px;
+  border-radius:14px;
+  border:1px solid #f0d8e2;
+}
+
+button{
+  width:100%;
+  padding:16px;
+  margin-top:20px;
+  border:none;
+  border-radius:20px;
+  font-size:1rem;
+  cursor:pointer;
+  transition:0.3s ease;
+}
+
+.add-btn{
+  background:#f5c6d6;
+}
+
+.add-btn:hover{
+  background:#f2b3c8;
+}
+
+.whatsapp-btn{
+  background:#e9f7ef;
+}
+
+.whatsapp-btn:hover{
+  background:#d4f3df;
+}
+
+.trust{
+  margin-top:20px;
+  font-size:0.9rem;
+  color:#999;
+}
+
+/* RELATED SECTION */
+.related-section{
+  max-width:1200px;
+  margin:100px auto;
+  padding:0 30px;
+}
+
+.related-section h2{
+  text-align:center;
+  font-weight:500;
+  margin-bottom:40px;
+  color:#c78da3;
+}
+
+.related-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+
+.related-card{
+  background:white;
+  border-radius:20px;
+  padding:15px;
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s ease;
+  box-shadow:0 10px 25px rgba(0,0,0,0.05);
+}
+
+.related-card:hover{
+  transform:translateY(-5px);
+}
+
+.related-card img{
+  width:100%;
+  border-radius:15px;
+  height:260px;
+  object-fit:cover;
+}
+
+.related-name{
+  margin-top:15px;
+}
+
+.related-price{
+  color:#c78da3;
+  margin-top:5px;
+}
+
+/* CART */
+#cart{
+  position:fixed;
+  right:25px;
+  bottom:25px;
+  background:#f5c6d6;
+  padding:14px 22px;
+  border-radius:30px;
+}
+
+#cart-count{
+  background:white;
+  border-radius:50%;
+  padding:3px 8px;
+  font-size:0.8rem;
+  margin-left:6px;
+}
+
+/* POPUP */
+.success-popup{
+  position:fixed;
+  top:20px;
+  right:-300px;
+  background:#f5c6d6;
+  padding:14px 22px;
+  border-radius:20px;
+  transition:0.5s ease;
+}
+
+.success-popup.show{
+  right:20px;
+}
+
+@media(max-width:768px){
+  .product-container{
+    flex-direction:column;
+    gap:50px;
+  }
+}
 </style>
 </head>
+
 <body>
 
 <header>
-  <img src="hero.png" alt="NAAR Logo">
+  <img src="hero.png">
 </header>
 
 <div class="product-container">
-  <div class="product-image">
-    <img id="productImage" src="" alt="Product Image">
+
+  <div class="product-gallery">
+    <img id="mainImage" class="main-image" src="">
+    <div class="thumbnail-container" id="thumbnailContainer"></div>
   </div>
+
   <div class="product-details">
-    <h1 id="productName">Product Name</h1>
-    <p class="price" id="productPrice">TAKA 0</p>
-    <p class="desc" id="productDesc">Product description here.</p>
-    <label for="sizeSelect">Size:</label>
+    <h1 id="productName"></h1>
+    <div class="price" id="productPrice"></div>
+    <div class="desc" id="productDesc"></div>
+
     <select id="sizeSelect">
       <option value="">Select Size</option>
-      <option value="S">S – 38</option>
-      <option value="M">M – 40</option>
-      <option value="L">L – 42</option>
-      <option value="XL">XL – 44</option>
-      <option value="XXL">XXL – 46</option>
+      <option>S – 38</option>
+      <option>M – 40</option>
+      <option>L – 42</option>
+      <option>XL – 44</option>
+      <option>XXL – 46</option>
     </select>
-    <button id="addCartBtn">Add to Cart</button>
-    <button class="whatsapp-btn" id="whatsappBtn">Order on WhatsApp</button>
+
+    <button class="add-btn" id="addCartBtn">Add to Cart</button>
+    <button class="whatsapp-btn" id="whatsappBtn">Order via WhatsApp</button>
+
+    <div class="trust">
+      Free delivery inside Chattogram • 3-5 working days
+    </div>
   </div>
+
 </div>
 
-<div id="cart">🛒 Cart</div>
+<section class="related-section">
+  <h2>You May Also Like</h2>
+  <div class="related-grid" id="relatedGrid"></div>
+</section>
+
+<div id="cart">Cart <span id="cart-count">0</span></div>
+<div class="success-popup" id="successPopup">Added to cart ♡</div>
 
 <script>
-const products = {
-  sumya: { name: "SUMYA KURTI", price: 550, desc: "Modern style kurti with subtle embroidery and soft fabric.", img: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1" },
-  naima: { name: "NAIMA SET", price: 650, desc: "Elegant kurti set with soft textures and chic design.", img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633" },
-  fatiha: { name: "FATIHA CO-ORD", price: 650, desc: "Stylish coordinated kurti set with modern embroidery.", img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990" },
-  aliza: { name: "ALIZA KURTI", price: 500, desc: "Classic kurti with elegant patterns and soft fabric.", img: "https://images.unsplash.com/photo-1618354691438-25bc04584c23" },
-  zara: { name: "ZARA SET", price: 700, desc: "Trendy kurti set with delicate embroidery and chic look.", img: "https://images.unsplash.com/photo-1618354691605-c8e56b798a0d" }
+
+const products={
+  sumya:{
+    name:"SUMYA KURTI",
+    price:550,
+    desc:"Soft breathable kurti with subtle feminine embroidery.",
+    images:[
+      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1"
+    ]
+  },
+  naima:{
+    name:"NAIMA SET",
+    price:650,
+    desc:"Elegant pastel kurti set for everyday chic.",
+    images:[
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633"
+    ]
+  },
+  aliza:{
+    name:"ALIZA KURTI",
+    price:500,
+    desc:"Lightweight minimal kurti for comfort.",
+    images:[
+      "https://images.unsplash.com/photo-1618354691438-25bc04584c23"
+    ]
+  },
+  zara:{
+    name:"ZARA SET",
+    price:700,
+    desc:"Modern feminine coordinated set.",
+    images:[
+      "https://images.unsplash.com/photo-1618354691605-c8e56b798a0d"
+    ]
+  }
 };
 
-// URL params
-const params = new URLSearchParams(window.location.search);
-const productKey = params.get("name");
-const selectedSize = params.get("size");
+const params=new URLSearchParams(window.location.search);
+const key=params.get("name");
 
-// Set product info
-if(products[productKey]){
-  const prod = products[productKey];
-  document.getElementById("productName").innerText = prod.name;
-  document.getElementById("productPrice").innerText = `TAKA ${prod.price}`;
-  document.getElementById("productDesc").innerText = prod.desc;
-  document.getElementById("productImage").src = prod.img;
-}
+if(products[key]){
 
-// Preselect size
-if(selectedSize){
-  const sizeSelect = document.getElementById("sizeSelect");
-  sizeSelect.value = selectedSize;
-}
+const product=products[key];
 
-// Cart
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+document.getElementById("productName").innerText=product.name;
+document.getElementById("productPrice").innerText=`TAKA ${product.price}`;
+document.getElementById("productDesc").innerText=product.desc;
+document.getElementById("mainImage").src=product.images[0];
 
-// Add to cart with flying animation to cart icon
-document.getElementById("addCartBtn").addEventListener("click", ()=>{
-  const size = document.getElementById("sizeSelect").value;
-  if(!size){ alert("Please select a size"); return; }
-  const prod = products[productKey];
-
-  const existingIndex = cart.findIndex(i=>i.name===prod.name && i.size===size);
-  if(existingIndex>-1) cart[existingIndex].qty +=1;
-  else cart.push({name:prod.name, size, price:prod.price, img:prod.img, qty:1});
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  // Flying animation to cart icon
-  const img = document.getElementById("productImage");
-  const flyingImg = img.cloneNode(true);
-  flyingImg.classList.add("flying-img");
-  document.body.appendChild(flyingImg);
-  const imgRect = img.getBoundingClientRect();
-  const cartRect = document.getElementById("cart").getBoundingClientRect();
-  flyingImg.style.left = imgRect.left+"px";
-  flyingImg.style.top = imgRect.top+"px";
-  requestAnimationFrame(()=>{
-    flyingImg.style.transform = `translate(${cartRect.left-imgRect.left}px, ${cartRect.top-imgRect.top}px) scale(0.1)`;
-    flyingImg.style.opacity='0.5';
-  });
-  setTimeout(()=>{ flyingImg.remove(); },800);
-
-  alert("Added to cart!");
-});
-
-// WhatsApp order
-document.getElementById("whatsappBtn").addEventListener("click", ()=>{
-  if(cart.length===0){
-    alert("Cart is empty. Adding this product to cart first.");
-    document.getElementById("addCartBtn").click();
+/* RELATED */
+const relatedGrid=document.getElementById("relatedGrid");
+Object.keys(products).forEach(p=>{
+  if(p!==key){
+    const item=products[p];
+    const card=document.createElement("div");
+    card.className="related-card";
+    card.innerHTML=`
+      <img src="${item.images[0]}">
+      <div class="related-name">${item.name}</div>
+      <div class="related-price">TAKA ${item.price}</div>
+    `;
+    card.onclick=()=>window.location.href=`product.html?name=${p}`;
+    relatedGrid.appendChild(card);
   }
-  let msg = `Hello NAAR, I want to order:%0A`;
-  cart.forEach((i,n)=> msg+=`${n+1}. ${i.name} - ${i.size} - TAKA ${i.price} x${i.qty}%0A`);
-  window.open(`https://wa.me/8801819638383?text=${msg}`,"_blank");
 });
+
+/* CART */
+let cart=JSON.parse(localStorage.getItem("cart"))||[];
+
+function updateCartCount(){
+  document.getElementById("cart-count").innerText=
+    cart.reduce((t,i)=>t+i.qty,0);
+}
+updateCartCount();
+
+document.getElementById("addCartBtn").onclick=()=>{
+  const size=document.getElementById("sizeSelect").value;
+  if(!size) return;
+
+  const existing=cart.find(i=>i.name===product.name && i.size===size);
+  if(existing) existing.qty++;
+  else cart.push({name:product.name,size,price:product.price,qty:1});
+
+  localStorage.setItem("cart",JSON.stringify(cart));
+  updateCartCount();
+
+  const popup=document.getElementById("successPopup");
+  popup.classList.add("show");
+  setTimeout(()=>popup.classList.remove("show"),2000);
+};
+
+/* WHATSAPP */
+document.getElementById("whatsappBtn").onclick=()=>{
+  const size=document.getElementById("sizeSelect").value;
+  if(!size) return;
+
+  const message=
+`Hello NAAR,
+I want to order:
+
+Product: ${product.name}
+Size: ${size}
+Price: TAKA ${product.price}`;
+
+  window.open(`https://wa.me/8801819638383?text=${encodeURIComponent(message)}`,"_blank");
+};
+
+}else{
+  document.body.innerHTML="<h2 style='text-align:center;margin-top:100px;'>Product not found</h2>";
+}
+
 </script>
 
 </body>
