@@ -27,7 +27,7 @@ header{
 
 header img{ height:45px; }
 
-/* PRODUCT SECTION */
+/* PRODUCT */
 .product-container{
   max-width:1200px;
   margin:80px auto;
@@ -48,29 +48,6 @@ header img{ height:45px; }
   box-shadow:0 15px 40px rgba(255,192,203,0.15);
 }
 
-.thumbnail-container{
-  display:flex;
-  gap:12px;
-  margin-top:15px;
-}
-
-.thumbnail{
-  width:75px;
-  height:95px;
-  object-fit:cover;
-  border-radius:12px;
-  cursor:pointer;
-  opacity:0.6;
-  transition:0.3s ease;
-}
-
-.thumbnail.active,
-.thumbnail:hover{
-  opacity:1;
-  border:2px solid #f5c6d6;
-}
-
-/* DETAILS */
 .product-details{
   flex:1;
   min-width:320px;
@@ -135,7 +112,7 @@ button{
   color:#999;
 }
 
-/* RELATED SECTION */
+/* RELATED */
 .related-section{
   max-width:1200px;
   margin:100px auto;
@@ -234,10 +211,8 @@ button{
 </header>
 
 <div class="product-container">
-
   <div class="product-gallery">
-    <img id="mainImage" class="main-image" src="">
-    <div class="thumbnail-container" id="thumbnailContainer"></div>
+    <img id="mainImage" class="main-image">
   </div>
 
   <div class="product-details">
@@ -261,7 +236,6 @@ button{
       Free delivery inside Chattogram • 3-5 working days
     </div>
   </div>
-
 </div>
 
 <section class="related-section">
@@ -275,51 +249,26 @@ button{
 <script>
 
 const products={
-  sumya:{
-    name:"SUMYA KURTI",
-    price:550,
-    desc:"Soft breathable kurti with subtle feminine embroidery.",
-    images:[
-      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1"
-    ]
-  },
-  naima:{
-    name:"NAIMA SET",
-    price:650,
-    desc:"Elegant pastel kurti set for everyday chic.",
-    images:[
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633"
-    ]
-  },
-  aliza:{
-    name:"ALIZA KURTI",
-    price:500,
-    desc:"Lightweight minimal kurti for comfort.",
-    images:[
-      "https://images.unsplash.com/photo-1618354691438-25bc04584c23"
-    ]
-  },
-  zara:{
-    name:"ZARA SET",
-    price:700,
-    desc:"Modern feminine coordinated set.",
-    images:[
-      "https://images.unsplash.com/photo-1618354691605-c8e56b798a0d"
-    ]
-  }
+  sumya:{name:"SUMYA KURTI",price:550,desc:"Soft feminine embroidered kurti.",img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1"},
+  naima:{name:"NAIMA SET",price:650,desc:"Elegant pastel kurti set.",img:"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633"},
+  aliza:{name:"ALIZA KURTI",price:500,desc:"Minimal everyday kurti.",img:"https://images.unsplash.com/photo-1618354691438-25bc04584c23"},
+  zara:{name:"ZARA SET",price:700,desc:"Modern coordinated set.",img:"https://images.unsplash.com/photo-1618354691605-c8e56b798a0d"}
 };
 
+/* SAFE AUTO LOAD */
 const params=new URLSearchParams(window.location.search);
-const key=params.get("name");
+let key=params.get("name");
 
-if(products[key]){
+if(!products[key]){
+  key=Object.keys(products)[0]; // auto load first product
+}
 
 const product=products[key];
 
 document.getElementById("productName").innerText=product.name;
 document.getElementById("productPrice").innerText=`TAKA ${product.price}`;
 document.getElementById("productDesc").innerText=product.desc;
-document.getElementById("mainImage").src=product.images[0];
+document.getElementById("mainImage").src=product.img;
 
 /* RELATED */
 const relatedGrid=document.getElementById("relatedGrid");
@@ -329,7 +278,7 @@ Object.keys(products).forEach(p=>{
     const card=document.createElement("div");
     card.className="related-card";
     card.innerHTML=`
-      <img src="${item.images[0]}">
+      <img src="${item.img}">
       <div class="related-name">${item.name}</div>
       <div class="related-price">TAKA ${item.price}</div>
     `;
@@ -378,10 +327,6 @@ Price: TAKA ${product.price}`;
 
   window.open(`https://wa.me/8801819638383?text=${encodeURIComponent(message)}`,"_blank");
 };
-
-}else{
-  document.body.innerHTML="<h2 style='text-align:center;margin-top:100px;'>Product not found</h2>";
-}
 
 </script>
 
